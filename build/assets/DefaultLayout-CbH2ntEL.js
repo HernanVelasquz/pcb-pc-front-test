@@ -1,0 +1,1 @@
+import{j as a}from"./index-B4xvOnNy.js";function r({children:e}){return a.jsx("div",{className:"min-h-screen bg-gray-50",children:a.jsx("main",{className:"container mx-auto px-4 py-8",children:e})})}export{r as DefaultLayout};
