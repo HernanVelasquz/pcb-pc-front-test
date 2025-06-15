@@ -1,25 +1,26 @@
-name: Deploy to Firebase
+name: Build and Deploy to Firebase
 
 on:
-  workflow_run:
-    workflows: ["Build"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
-  actions: read
+  actions: write
 
 jobs:
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          name: Build
-          path: Build
+          node-version: '20'
+      - name: Install dependencies
+        run: yarn
+      - name: Build
+        run: yarn build
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
